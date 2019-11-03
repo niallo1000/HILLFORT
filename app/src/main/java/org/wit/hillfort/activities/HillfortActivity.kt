@@ -8,6 +8,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
@@ -50,7 +51,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     setSupportActionBar(toolbarAdd)
     info("Hillfort Activity started..")
 
-
+      hillfortLocation.setOnClickListener {
+          startActivity (intentFor<MapActivity>())
+      }
 
     btnAdd.setOnClickListener() {
       hillfort.title = hillfortTitle.text.toString()
