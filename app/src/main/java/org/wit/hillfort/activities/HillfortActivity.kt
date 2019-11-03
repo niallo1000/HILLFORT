@@ -18,6 +18,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
   var hillfort = HillfortModel()
   var user = UserModel()
+    var edit = false
 
   lateinit var app: MainApp
 
@@ -27,6 +28,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     info("Hillfort Activity started..")
 
     app = application as MainApp
+
+      if (intent.hasExtra("hillfort_edit")) {
+          edit = true
+          hillfort = intent.extras?.getParcelable<HillfortModel>("hillfort_edit")!!
+          hillfortTitle.setText(hillfort.title)
+          description.setText(hillfort.description)
+          btnAdd.setText(R.string.save_hillfort)
+      }
 
     toolbarAdd.title = title
     setSupportActionBar(toolbarAdd)
@@ -42,31 +51,35 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         hillfort.visited = true
       }
 
-      if (hillfort.title.isNotEmpty()) {
-        app.hillforts.add(hillfort.copy())
-        info("add Button Pressed: ${hillfort}")
-        for (i in app.hillforts.indices) {
-          info("hillfort[$i]:${app.hillforts[i]}")
+        if (hillfort.title.isEmpty()) {
+            toast(R.string.enter_hillfort_title)
+        } else {
+            if (edit) {
+                app.hillforts.update(hillfort.copy())
+            } else {
+                app.hillforts.create(hillfort.copy())
+            }
         }
+        info("add Button Pressed: $hillfortTitle")
         setResult(AppCompatActivity.RESULT_OK)
         finish()
-      } else {
-        toast("Please Enter a title")
-      }
     }
-  }
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.menu_hillfort, menu)
-    return super.onCreateOptionsMenu(menu)
+
   }
 
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.item_cancel -> {
-        finish()
-      }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+      menuInflater.inflate(R.menu.menu_hillfort, menu)
+      return super.onCreateOptionsMenu(menu)
     }
-    return super.onOptionsItemSelected(item)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+      when (item.itemId) {
+        R.id.item_cancel -> {
+          finish()
+        }
+      }
+      return super.onOptionsItemSelected(item)
+    }
   }
-}
+
 
