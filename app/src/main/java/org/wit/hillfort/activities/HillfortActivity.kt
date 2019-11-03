@@ -14,6 +14,7 @@ import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImage
+import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.helpers.showImagePicker
 
 
@@ -39,6 +40,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
           hillfortTitle.setText(hillfort.title)
           description.setText(hillfort.description)
           btnAdd.setText(R.string.save_hillfort)
+          hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
       }
 
     toolbarAdd.title = title
