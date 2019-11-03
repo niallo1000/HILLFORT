@@ -13,5 +13,6 @@
   <string name="visited"> Visited </string>
   <string name="button_addImage"> Add Image </string>
   <string name="select_hillfort_image">Select hillfort image</string>
+  <string name="change_hillfort_image">Change hillfort image</string>
 
 </resources>
