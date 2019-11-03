@@ -64,6 +64,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         setResult(AppCompatActivity.RESULT_OK)
         finish()
     }
+      chooseImage.setOnClickListener {
+          info ("Select image")
+      }
 
   }
 
