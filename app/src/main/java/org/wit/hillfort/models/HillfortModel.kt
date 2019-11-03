@@ -9,5 +9,6 @@ data class HillfortModel(var id: Long = 0,
                          var title: String = "",
                           var description: String = "",
                          var location: String = "",
-                         var visited: Boolean = false): Parcelable
+                         var visited: Boolean = false,
+                         var image: String = ""): Parcelable
 

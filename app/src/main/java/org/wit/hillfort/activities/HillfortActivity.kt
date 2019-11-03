@@ -1,5 +1,6 @@
 package org.wit.hillfort.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +13,8 @@ import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.UserModel
 import org.wit.hillfort.R
+import org.wit.hillfort.helpers.readImage
+import org.wit.hillfort.helpers.showImagePicker
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -19,6 +22,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
   var hillfort = HillfortModel()
   var user = UserModel()
     var edit = false
+    val IMAGE_REQUEST = 1
 
   lateinit var app: MainApp
 
@@ -65,8 +69,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         finish()
     }
       chooseImage.setOnClickListener {
-          info ("Select image")
-      }
+          showImagePicker(this, IMAGE_REQUEST)
+  }
 
   }
 
@@ -82,6 +86,17 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
       }
       return super.onOptionsItemSelected(item)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            IMAGE_REQUEST -> {
+                if (data != null) {
+                    hillfort.image = data.getData().toString()
+                    hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+                }
+            }
+        }
     }
   }
 

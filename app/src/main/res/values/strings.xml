@@ -12,5 +12,6 @@
   <string name="save_hillfort"> Save Hillfort </string>
   <string name="visited"> Visited </string>
   <string name="button_addImage"> Add Image </string>
+  <string name="select_hillfort_image">Select hillfort image</string>
 
 </resources>
