@@ -17,6 +17,7 @@ import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImage
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.helpers.showImagePicker
+import org.wit.hillfort.models.Location
 
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
@@ -26,6 +27,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     var edit = false
     val IMAGE_REQUEST = 1
 
+    val LOCATION_REQUEST = 2
+    var location = Location(52.245696, -7.139102, 15f)
+
   lateinit var app: MainApp
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +37,12 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     setContentView(R.layout.activity_hillfort)
     info("Hillfort Activity started..")
 
+
     app = application as MainApp
+      app.hillforts.add(HillfortModel(1, "Ridge of Capard", "Near the modern town of Rosenallis, a circular contour fort positioned in a commanding position at the NE end of a hill ridge known as the 'Ridge of Capard'","Laois", true, " s", -7.433312,  53.121486,0f))
+      app.hillforts.add(HillfortModel(2, "Kilpoole Upper ", "This possible coastal promontory fort is located c. 5km SE of Wicklow Town.","Wicklow", false, " s", -6.017528,  52.943869 ,0f))
+      app.hillforts.add(HillfortModel(3, "Kilcashel  ", "Near small village of Ballygahan, an oval hillslope fort of approximately 1.6ha total site footprint positioned on sloping ground with steep break of slope to N, E and S. Extensive views of the Avoca river valley from the interior.","Wicklow", false, " s", -6.231896,  52.872296 ,0f))
+
 
       if (intent.hasExtra("hillfort_edit")) {
           edit = true
@@ -58,7 +67,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener() {
       hillfort.title = hillfortTitle.text.toString()
       hillfort.description = description.text.toString()
-      hillfort.location = location.text.toString()
+      //hillfort.location = location.text.toString()
       visited.setOnClickListener() {
         hillfort.visited = true
       }
@@ -79,6 +88,15 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
       chooseImage.setOnClickListener {
           showImagePicker(this, IMAGE_REQUEST)
   }
+      hillfortLocation.setOnClickListener {
+          val location = Location(52.245696, -7.139102, 15f)
+          if (hillfort.zoom != 0f) {
+              location.lat = hillfort.lat
+              location.lng = hillfort.lng
+              location.zoom = hillfort.zoom
+          }
+          startActivityForResult(intentFor<MapActivity>().putExtra("location", location), LOCATION_REQUEST)
+      }
 
   }
 
@@ -103,6 +121,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfort.image = data.getData().toString()
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.change_hillfort_image)
+                }
+            }
+            LOCATION_REQUEST -> {
+                if (data != null) {
+                    location = data.extras?.getParcelable<Location>("location")!!
                 }
             }
         }
