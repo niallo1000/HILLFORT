@@ -39,9 +39,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
 
     app = application as MainApp
-      app.hillforts.add(HillfortModel(1, "Ridge of Capard", "Near the modern town of Rosenallis, a circular contour fort positioned in a commanding position at the NE end of a hill ridge known as the 'Ridge of Capard'","Laois", true, " s", -7.433312,  53.121486,0f))
-      app.hillforts.add(HillfortModel(2, "Kilpoole Upper ", "This possible coastal promontory fort is located c. 5km SE of Wicklow Town.","Wicklow", false, " s", -6.017528,  52.943869 ,0f))
-      app.hillforts.add(HillfortModel(3, "Kilcashel  ", "Near small village of Ballygahan, an oval hillslope fort of approximately 1.6ha total site footprint positioned on sloping ground with steep break of slope to N, E and S. Extensive views of the Avoca river valley from the interior.","Wicklow", false, " s", -6.231896,  52.872296 ,0f))
+
 
 
       if (intent.hasExtra("hillfort_edit")) {
