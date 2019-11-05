@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
+import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivityForResult
 import org.wit.hillfort.R
@@ -21,12 +23,14 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_hillfort_list)
     app = application as MainApp
+
     toolbar.title = title
     setSupportActionBar(toolbar)
 
     val layoutManager = LinearLayoutManager(this)
     recyclerView.layoutManager = layoutManager
-    recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(), this)
+   // recyclerView.adapter = HillfortAdapter(app.hillforts.findAll(), this)
+    loadHillforts()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -47,9 +51,19 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    recyclerView.adapter?.notifyDataSetChanged()
+   // recyclerView.adapter?.notifyDataSetChanged()
+    loadHillforts()
     super.onActivityResult(requestCode, resultCode, data)
+
   }
 
+  private fun loadHillforts() {
+    showHillforts(app.hillforts.findAll())
+  }
+
+  fun showHillforts (hillforts: List<HillfortModel>) {
+    recyclerView.adapter = HillfortAdapter(hillforts, this)
+    recyclerView.adapter?.notifyDataSetChanged()
+  }
 }
 

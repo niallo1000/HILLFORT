@@ -28,7 +28,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     val IMAGE_REQUEST = 1
 
     val LOCATION_REQUEST = 2
-    var location = Location(52.245696, -7.139102, 15f)
+    //var location = Location(52.245696, -7.139102, 15f)
 
   lateinit var app: MainApp
 
@@ -125,7 +125,10 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             }
             LOCATION_REQUEST -> {
                 if (data != null) {
-                    location = data.extras?.getParcelable<Location>("location")!!
+                    val location = data.extras?.getParcelable<Location>("location")!!
+                    hillfort.lat = location.lat
+                    hillfort.lng = location.lng
+                    hillfort.zoom = location.zoom
                 }
             }
         }
