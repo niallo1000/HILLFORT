@@ -18,6 +18,19 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
         return hillforts
     }
 
+
+    override fun findUsersHillforts(userId: Long): List<HillfortModel> {
+        return hillforts.filter { it.userId == userId }
+
+    }
+
+
+
+    override fun findVisitedHillforts(userId: Long): List<HillfortModel> {
+        var allHillforts =  hillforts.filter { it.userId == userId }
+        return allHillforts.filter { it.visited == true }
+    }
+
     override fun create(hillfort: HillfortModel) {
         hillfort.id = getId()
         hillforts.add(hillfort)
@@ -31,6 +44,8 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
             foundHillfort.description = hillfort.description
             foundHillfort.location = hillfort.location
             foundHillfort.visited = hillfort.visited
+            foundHillfort.dateVisited = hillfort.dateVisited
+            foundHillfort.userId = hillfort.userId
             foundHillfort.image = hillfort.image
             foundHillfort.lat = hillfort.lat
             foundHillfort.lng = hillfort.lng
@@ -43,6 +58,15 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
         hillforts.forEach { info("${it}") }
     }
 
+
+    override fun delete(placemark: HillfortModel) {
+        hillforts.remove(placemark)
+    }
+
+    override fun findById(id:Long) : HillfortModel? {
+        val foundPlacemark: HillfortModel? = hillforts.find { it.id == id }
+        return foundPlacemark
+    }
 
 
 }

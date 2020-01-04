@@ -39,19 +39,33 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
     }
 
 
+    override fun findUsersHillforts(userId: Long): List<HillfortModel> {
+        return hillforts.filter { it.userId == userId }
+    }
+
+
+
+    override fun findVisitedHillforts(userId: Long): List<HillfortModel> {
+        var allHillforts =  hillforts.filter { it.userId == userId }
+        return allHillforts.filter { it.visited == true }
+
+    }
+
+
     override fun update(hillfort: HillfortModel) {
         val hillfortsList = findAll() as ArrayList<HillfortModel>
-
         var foundHillfort: HillfortModel? = hillfortsList.find { p -> p.id == hillfort.id }
         if (foundHillfort != null) {
             foundHillfort.title = hillfort.title
             foundHillfort.description = hillfort.description
             foundHillfort.location = hillfort.location
             foundHillfort.image = hillfort.image
+            foundHillfort.userId = hillfort.userId
             foundHillfort.lat = hillfort.lat
             foundHillfort.lng = hillfort.lng
             foundHillfort.zoom = hillfort.zoom
             foundHillfort.visited = hillfort.visited
+            foundHillfort.dateVisited = hillfort.dateVisited
     }
         serialize()
     }
@@ -66,10 +80,14 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         hillforts = Gson().fromJson(jsonString, listType)
     }
 
-   // override fun delete(hillfort: HillfortModel) {
-   //
-    //     hillforts.remove(hillfort)
-   //     serialize()
-  //  }
+   override fun delete(hillfort: HillfortModel) {
+        hillforts.remove(hillfort)
+     serialize()
+    }
+
+    override fun findById(id:Long) : HillfortModel? {
+        val foundPlacemark: HillfortModel? = hillforts.find { it.id == id }
+        return foundPlacemark
+    }
 
 }
