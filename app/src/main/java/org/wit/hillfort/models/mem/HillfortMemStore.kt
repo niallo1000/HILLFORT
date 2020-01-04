@@ -44,14 +44,12 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
         if (foundHillfort != null) {
             foundHillfort.title = hillfort.title
             foundHillfort.description = hillfort.description
-           // foundHillfort.location = hillfort.location
+            foundHillfort.location = hillfort.location
           //  foundHillfort.visited = hillfort.visited
           //  foundHillfort.dateVisited = hillfort.dateVisited
           //  foundHillfort.userId = hillfort.userId
             foundHillfort.image = hillfort.image
-            foundHillfort.lat = hillfort.lat
-            foundHillfort.lng = hillfort.lng
-            foundHillfort.zoom = hillfort.zoom
+
             logAll()
         }
     }
