@@ -31,12 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HillfortListActivity" />
-        <activity android:name=".activities.HillfortActivity" />
+        <activity android:name=".views.hillfortlist.HillfortListView" />
+        <activity android:name=".views.hillfort.HillfortView" />
         <activity android:name=".activities.SignupActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity
-            android:name=".activities.MapActivity"
+            android:name=".views.editlocation.EditLocationView"
             android:label="@string/title_activity_map" />
     </application>
 
