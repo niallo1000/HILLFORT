@@ -68,5 +68,9 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
         return foundPlacemark
     }
 
+    override fun clear() {
+        hillforts.clear()
+    }
+
 
 }
