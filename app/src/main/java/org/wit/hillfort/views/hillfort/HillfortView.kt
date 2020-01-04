@@ -21,24 +21,18 @@ class HillfortView : BaseView(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort)
-
         init(toolbarAdd)
-
         presenter = initPresenter (HillfortPresenter(this)) as HillfortPresenter
-
         chooseImage.setOnClickListener { presenter.doSelectImage() }
+        //hillfortLocation.setOnClickListener { presenter.doSetLocation() }
 
-        hillfortLocation.setOnClickListener { presenter.doSetLocation() }
-    }
-
-    override fun showHillfort(hillfort: HillfortModel) {
-        hillfortTitle.setText(hillfort.title)
-        description.setText(hillfort.description)
-        hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
-        if (hillfort.image != null) {
-            chooseImage.setText(R.string.change_hillfort_image)
+        mapView.getMapAsync {
+            presenter.doConfigureMap(it)
+            it.setOnMapClickListener { presenter.doSetLocation() }
         }
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
@@ -70,6 +64,23 @@ class HillfortView : BaseView(), AnkoLogger {
 
     override fun onBackPressed() {
         presenter.doCancel()
+    }
+
+    override fun showHillfort(hillfort: HillfortModel) {
+        hillfortTitle.setText(hillfort.title)
+        description.setText(hillfort.description)
+        hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+        if (hillfort.image != null) {
+            chooseImage.setText(R.string.change_hillfort_image)
+        }
+        lat.setText("%.6f".format(hillfort.lat))
+        lng.setText("%.6f".format(hillfort.lng))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+        presenter.doResartLocationUpdates()
     }
 }
 
