@@ -19,17 +19,17 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
     }
 
 
-    override fun findUsersHillforts(userId: Long): List<HillfortModel> {
-        return hillforts.filter { it.userId == userId }
+  //  override fun findUsersHillforts(userId: Long): List<HillfortModel> {
+ //       return hillforts.filter { it.userId == userId }
 
-    }
+  //  }
 
 
 
-    override fun findVisitedHillforts(userId: Long): List<HillfortModel> {
-        var allHillforts =  hillforts.filter { it.userId == userId }
-        return allHillforts.filter { it.visited == true }
-    }
+   // override fun findVisitedHillforts(userId: Long): List<HillfortModel> {
+  //      var allHillforts =  hillforts.filter { it.userId == userId }
+  //      return allHillforts.filter { it.visited == true }
+ //   }
 
     override fun create(hillfort: HillfortModel) {
         hillfort.id = getId()
@@ -42,10 +42,10 @@ class HillfortMemStore : HillfortStore, AnkoLogger {
         if (foundHillfort != null) {
             foundHillfort.title = hillfort.title
             foundHillfort.description = hillfort.description
-            foundHillfort.location = hillfort.location
-            foundHillfort.visited = hillfort.visited
-            foundHillfort.dateVisited = hillfort.dateVisited
-            foundHillfort.userId = hillfort.userId
+           // foundHillfort.location = hillfort.location
+          //  foundHillfort.visited = hillfort.visited
+          //  foundHillfort.dateVisited = hillfort.dateVisited
+          //  foundHillfort.userId = hillfort.userId
             foundHillfort.image = hillfort.image
             foundHillfort.lat = hillfort.lat
             foundHillfort.lng = hillfort.lng
